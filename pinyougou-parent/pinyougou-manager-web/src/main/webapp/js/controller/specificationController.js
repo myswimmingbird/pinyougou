@@ -62,6 +62,7 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
 			function(response){
 				if(response.success){
 					$scope.reloadList();//刷新列表
+
 				}						
 			}		
 		);				

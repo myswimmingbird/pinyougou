@@ -1,5 +1,6 @@
 package com.pinyougou.sellergoods.service.impl;
 import java.util.List;
+import java.util.Map;
 
 import com.pinyougou.mapper.TbSpecificationOptionMapper;
 import com.pinyougou.pojo.TbSpecificationOption;
@@ -97,6 +98,7 @@ public class SpecificationServiceImpl implements SpecificationService {
 		TbSpecificationOptionExample example = new TbSpecificationOptionExample();
 		TbSpecificationOptionExample.Criteria criteria = example.createCriteria();
 		criteria.andSpecIdEqualTo(tbSpecification.getId());
+		example.setOrderByClause("orders");
 		List<TbSpecificationOption> tbSpecificationOptions = specificationOptionMapper.selectByExample(example);
 
 
@@ -137,5 +139,10 @@ public class SpecificationServiceImpl implements SpecificationService {
 		Page<TbSpecification> page= (Page<TbSpecification>)specificationMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	@Override
+	public List<Map> selectOptionList() {
+		return specificationMapper.selectOptionList();
+	}
+
 }

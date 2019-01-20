@@ -1,5 +1,5 @@
 app.controller("brandController", function ($scope, $controller, brandService) {
-    $controller("baseController", {$scope:$scope});//继承
+    $controller("baseController", {$scope: $scope});//继承
 
     $scope.searchEntity = {};//定义搜索对象
 

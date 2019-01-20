@@ -47,4 +47,17 @@ app.controller("baseController", function ($scope) {
             });
         }
     };
+
+    //提取json字符串中的某个属性，返回其拼接字符串，以逗号分隔
+    $scope.jsonToString = function (jsonString,key) {
+        var json=JSON.parse(jsonString);
+        var value = "";
+        for (var i = 0; i < json.length; i++) {
+            if (i > 0) {
+                value += ", ";
+            }
+            value += json[i][key];
+        }
+        return value;
+    };
 });
