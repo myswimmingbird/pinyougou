@@ -79,7 +79,7 @@ public class SellerController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public TbSeller findOne(Long id){
+	public TbSeller findOne(String id){
 		return sellerService.findOne(id);		
 	}
 	
@@ -89,7 +89,7 @@ public class SellerController {
 	 * @return
 	 */
 	@RequestMapping("/delete")
-	public Result delete(Long [] ids){
+	public Result delete(String [] ids){
 		try {
 			sellerService.delete(ids);
 			return new Result(true, "删除成功"); 
@@ -101,7 +101,7 @@ public class SellerController {
 	
 		/**
 	 * 查询+分页
-	 * @param brand
+	 * @param seller
 	 * @param page
 	 * @param rows
 	 * @return
@@ -110,5 +110,6 @@ public class SellerController {
 	public PageResult search(@RequestBody TbSeller seller, int page, int rows  ){
 		return sellerService.findPage(seller, page, rows);		
 	}
-	
+
+
 }

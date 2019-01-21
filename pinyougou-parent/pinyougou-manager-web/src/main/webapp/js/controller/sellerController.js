@@ -51,8 +51,7 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 		);				
 	}
 	
-	 
-	//批量删除 
+	//批量删除
 	$scope.dele=function(){			
 		//获取选中的复选框			
 		sellerService.dele( $scope.selectIds ).success(
@@ -67,13 +66,25 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 	$scope.searchEntity={};//定义搜索对象 
 	
 	//搜索
-	$scope.search=function(page,rows){			
-		sellerService.search(page,rows,$scope.searchEntity).success(
-			function(response){
-				$scope.list=response.rows;	
-				$scope.paginationConf.totalItems=response.total;//更新总记录数
-			}			
+	$scope.search=function(page,rows){
+		sellerService.search(page, rows, $scope.searchEntity).success(
+			function (response) {
+				$scope.list = response.rows;
+				$scope.paginationConf.totalItems = response.total;//更新总记录数
+			}
 		);
 	}
-    
+	//修改商家状态
+	$scope.updateStatus = function (sellerId,status) {
+		sellerService.updateStatus(sellerId, status).success(function (response) {
+			if (response.success) {
+				$scope.reloadList();
+			} else {
+				alert(response.message);
+			}
+		});
+
+	};
+
+
 });	

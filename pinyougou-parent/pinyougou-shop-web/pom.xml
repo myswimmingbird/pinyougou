@@ -12,6 +12,15 @@
     <artifactId>pinyougou-shop-web</artifactId>
     <packaging>war</packaging>
     <dependencies>
+        <!-- 身份验证 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -106,6 +115,7 @@
                     <port>9102</port>
                     <!-- 请求路径 -->
                     <path>/</path>
+                    <uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
         </plugins>

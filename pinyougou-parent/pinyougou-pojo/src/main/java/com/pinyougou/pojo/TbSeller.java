@@ -18,7 +18,9 @@ public class TbSeller implements Serializable {
 
     private String telephone;
 
-    private String status;
+    private String status;//状态值：0：未审核1：已审核2：审核未通过3：关闭
+
+    private String statusStr;
 
     private String addressDetail;
 
@@ -115,6 +117,17 @@ public class TbSeller implements Serializable {
     }
 
     public void setStatus(String status) {
+        if (status != null) {
+            if (status.equals("0")) {
+                this.statusStr = "待审核";
+            } else if (status.equals("1")) {
+                this.statusStr = "已审核";
+            }else if (status.equals("2") ){
+                this.statusStr = "审核未通过";
+            } else if (status.equals("3")) {
+                this.statusStr = "关闭";
+            }
+        }
         this.status = status == null ? null : status.trim();
     }
 
@@ -244,6 +257,14 @@ public class TbSeller implements Serializable {
 
     public void setBankName(String bankName) {
         this.bankName = bankName == null ? null : bankName.trim();
+    }
+
+    public String getStatusStr() {
+        return statusStr;
+    }
+
+    public void setStatusStr(String statusStr) {
+        this.statusStr = statusStr;
     }
 
     @Override
