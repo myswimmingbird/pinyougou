@@ -2,10 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/security
-                           http://www.springframework.org/schema/security/spring-security.xsd">
+                           http://www.springframework.org/schema/security/spring-security.xsd
+                           http://code.alibabatech.com/schema/dubbo
+                           http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+>
 
     <!--配置不拦截的资源-->
     <security:http pattern="/register.html" security="none"/>
@@ -36,12 +41,21 @@
         </security:headers>
     </security:http>
 
-    <!--认证管理器-->
+    <!--认证管理器：调用service查询数据库,使用bcrypt密码加密  -->
     <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="tom" password="tom" authorities="ROLE_ADMIN"/>
-            </security:user-service>
+        <security:authentication-provider user-service-ref="userLoginService">
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
+
+    <!--引用dubbo服务-->
+    <dubbo:application name="pinyougou-shop-web"/>
+    <dubbo:registry address="zookeeper://192.168.25.128:2181"/>
+    <dubbo:reference id="sellerService" interface="com.pinyougou.sellergoods.service.SellerService"/>
+    <bean id="userLoginService" class="com.pinyougou.service.impl.UserLoginServiceImpl">
+        <property name="sellerService" ref="sellerService"/>
+    </bean>
+
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
 </beans>
