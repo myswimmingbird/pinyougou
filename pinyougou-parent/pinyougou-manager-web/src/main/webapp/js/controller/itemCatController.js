@@ -24,11 +24,17 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
 
     //查询实体
     $scope.findOne = function (id) {
+        $scope.typeTemplate = {id: "", text: ""};
         itemCatService.findOne(id).success(
             function (response) {
                 $scope.entity = response;
+                $scope.typeTemplate.id = response.typeId;
+                typeTemplateService.findOne($scope.typeTemplate.id).success(function (response) {
+                    $scope.typeTemplate.text = response.name;
+                });
             }
         );
+
     }
 
     //保存
@@ -55,6 +61,9 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
 
     //批量删除
     $scope.dele = function () {
+        if (!confirm("确认删除？")) {
+            return;
+        }
         //获取选中的复选框
         itemCatService.dele($scope.selectIds).success(
             function (response) {
@@ -120,6 +129,7 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
     };
 
     $scope.typeTemplateList = {data: []};//模板列表
+
     //获取模板列表
     $scope.findTypeTemplateList = function () {
         typeTemplateService.findTypeTemplateList().success(function (response) {

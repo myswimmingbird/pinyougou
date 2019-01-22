@@ -61,9 +61,9 @@
             <div class="form-group form-inline">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
-                            data-target="#editModal"><i class="fa fa-file-o"></i> 新建
+                            data-target="#editModal" ng-click="entity='';typeTemplate=''"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i class="fa fa-trash-o"></i> 删除</button>
                     <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-check"></i> 刷新</button>
 
                 </div>
@@ -76,7 +76,8 @@
             <thead>
             <tr>
                 <th class="" style="padding-right:0px">
-                    <input type="checkbox" class="icheckbox_square-blue">
+                    <input type="checkbox" class="icheckbox_square-blue"  ng-model="select_all"
+                           ng-change="selectAll()">
                 </th>
                 <th class="sorting_asc">分类ID</th>
                 <th class="sorting">分类名称</th>
@@ -87,7 +88,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="entity in list">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox"  ng-model="entity.checked" ng-change="selectOne(entity.checked,entity.id)"></td>
                 <td>{{entity.id}}</td>
                 <td>{{entity.name}}</td>
                 <td> {{entity.typeId}}</td>
