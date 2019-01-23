@@ -61,6 +61,9 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
 
     //批量删除
     $scope.dele = function () {
+        if ($scope.selectIds.length === 0) {
+            return;
+        }
         if (!confirm("确认删除？")) {
             return;
         }
@@ -102,7 +105,8 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
         itemCatService.findByParentId(id).success(function (response) {
             $scope.list = response;
         });
-
+        $scope.selectIds = [];
+        $scope.select_all = false;
     };
 
     $scope.grade = 1;//级别
