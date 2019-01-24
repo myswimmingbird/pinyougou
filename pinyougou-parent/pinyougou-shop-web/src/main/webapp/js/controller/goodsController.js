@@ -1,5 +1,5 @@
 //控制层
-app.controller('goodsController', function ($scope, $controller, uploadService, goodsService) {
+app.controller('goodsController', function ($scope, $controller,typeTemplateService, uploadService, goodsService, itemCatService) {
 
     $controller('baseController', {$scope: $scope});//继承
 
@@ -107,15 +107,59 @@ app.controller('goodsController', function ($scope, $controller, uploadService, 
         });
     };
 
-    $scope.entity = {goods:{},goodsDesc:{itemImages: []}};
+    $scope.entity = {goods: {}, goodsDesc: {itemImages: []}};
     //添加图片列表
-    $scope.add_image_entity=function(){
+    $scope.add_image_entity = function () {
         $scope.entity.goodsDesc.itemImages.push($scope.image_entity);
     }
 
     //列表中移除图片
-    $scope.remove_image_entity=function(index){
-        $scope.entity.goodsDesc.itemImages.splice(index,1);
-    }
+    $scope.remove_image_entity = function (index) {
+        $scope.entity.goodsDesc.itemImages.splice(index, 1);
+    };
+
+    //获取一级分类下拉列表
+    $scope.selectItemCat1List = function () {
+        itemCatService.findByParentId(0).success(function (response) {
+            $scope.itemCat1List = response;
+        });
+
+    };
+    //获取二级分类下拉列表
+    $scope.$watch("entity.goods.category1Id", function (newValue, oldValue) {
+        itemCatService.findByParentId(newValue).success(function (response) {
+            $scope.itemCat2List = response;
+        });
+    });
+
+    //获取三级分类下拉列表
+    $scope.$watch("entity.goods.category2Id", function (newValue, OldValue) {
+        itemCatService.findByParentId(newValue).success(function (response) {
+            $scope.itemCat3List = response;
+        });
+    });
+
+    //获取模板Id
+    $scope.$watch("entity.goods.category3Id", function (newValue, oldValue) {
+        itemCatService.findOne(newValue).success(function (response) {
+            $scope.entity.goods.typeTemplateId = response.typeId;
+
+        });
+    });
+
+    //获取模板信息  以及规格选项
+    $scope.$watch("entity.goods.typeTemplateId", function (newValue, oldValue) {
+        typeTemplateService.findOne(newValue).success(function (response) {
+            $scope.typeTemplate = response;
+            $scope.typeTemplate.brandIds = JSON.parse(response.brandIds);
+            $scope.entity.goodsDesc.customAttributeItems = JSON.parse(response.customAttributeItems);
+        });
+        typeTemplateService.findSpecList(newValue).success(function (response) {
+            $scope.specList = response;
+
+        });
+    });
+
+
 
 });	
