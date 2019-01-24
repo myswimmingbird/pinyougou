@@ -107,7 +107,7 @@ app.controller('goodsController', function ($scope, $controller,typeTemplateServ
         });
     };
 
-    $scope.entity = {goods: {}, goodsDesc: {itemImages: []}};
+    $scope.entity = {goods: {}, goodsDesc: {itemImages: [],specificationItems:[]}};//定义集合格式
     //添加图片列表
     $scope.add_image_entity = function () {
         $scope.entity.goodsDesc.itemImages.push($scope.image_entity);
@@ -160,6 +160,23 @@ app.controller('goodsController', function ($scope, $controller,typeTemplateServ
         });
     });
 
+    //更新specificationItems集合
+    $scope.updateSpecAttribute = function ($event,name,value) {
+        var obj = $scope.searchObjectByKey($scope.entity.goodsDesc.specificationItems,"attributeName",name);
+        if (obj != null) {
+            if ($event.target.checked) {//往集合加元素
+                obj.attributeValue.push(value);
+            } else {//从集合删除元素
+                obj.splice(obj.attributeValue.indexOf(value),1);
+                if (obj.attributeValue.lengh == 0) {//集合长度为0，移除整条记录
+                    $scope.entity.goodsDesc.specificationItems.splice($scope.entity.goodsDesc.specificationItems.indexOf(obj), 1);
+                }
+            }
+        } else {
+            $scope.entity.goodsDesc.specificationItems.push({"attributeName": name, "attributeValue": [value]});
+        }
+
+    };
 
 
 });	

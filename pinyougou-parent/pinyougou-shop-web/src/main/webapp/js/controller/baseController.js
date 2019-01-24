@@ -49,8 +49,8 @@ app.controller("baseController", function ($scope) {
     };
 
     //提取json字符串中的某个属性，返回其拼接字符串，以/分隔
-    $scope.jsonToString = function (jsonString,key) {
-        var json=JSON.parse(jsonString);
+    $scope.jsonToString = function (jsonString, key) {
+        var json = JSON.parse(jsonString);
         var value = "";
         for (var i = 0; i < json.length; i++) {
             if (i > 0) {
@@ -60,4 +60,16 @@ app.controller("baseController", function ($scope) {
         }
         return value;
     };
+
+    //从集合按照key查询对象
+    $scope.searchObjectByKey = function (list, key, keyValue) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i][key] == keyValue) {
+                return list[i];
+            }
+        }
+        return null;
+    }
+
+
 });
