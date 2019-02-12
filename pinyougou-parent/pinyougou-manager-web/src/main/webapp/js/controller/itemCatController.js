@@ -72,6 +72,8 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
             function (response) {
                 if (response.success) {
                     $scope.findByParentId($scope.parentId);//刷新列表
+                }else {
+                    alert(response.message);
                 }
             }
         );

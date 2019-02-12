@@ -242,10 +242,10 @@
                                         <input class="form-control" placeholder="库存数量" ng-model="pojo.num">
                                     </td>
                                     <td>
-                                        <input type="checkbox" ng-model="pojo.status">
+                                        <input type="checkbox" ng-model="pojo.status" ng-true-value="1" ng-false-value="0" >
                                     </td>
                                     <td>
-                                        <input type="checkbox" ng-model="pojo.isDefault">
+                                        <input type="checkbox" ng-model="pojo.isDefault" ng-true-value="1" ng-false-value="0">
                                     </td>
                                 </tr>
 
@@ -266,7 +266,7 @@
 
     </div>
     <div class="btn-toolbar list-toolbar">
-        <button class="btn btn-primary" ng-click="add()"><i class="fa fa-save"></i>保存</button>
+        <button class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>保存</button>
         <button class="btn btn-default">返回列表</button>
     </div>
 

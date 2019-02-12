@@ -39,7 +39,10 @@ app.controller('goodsController', function ($scope, $controller, $location, type
                 $scope.entity.goodsDesc.customAttributeItems = JSON.parse(response.goodsDesc.customAttributeItems);
                 //显示规格
                 $scope.entity.goodsDesc.specificationItems = JSON.parse(response.goodsDesc.specificationItems);
-
+                //SKU
+                for (var i = 0; i < $scope.entity.itemList.length; i++) {
+                    $scope.entity.itemList[i].spec = JSON.parse($scope.entity.itemList[i].spec);
+                }
             }
         );
     };
@@ -61,8 +64,10 @@ app.controller('goodsController', function ($scope, $controller, $location, type
 
     //保存
     $scope.save = function () {
+        //提取文本编辑器
+        $scope.entity.goodsDesc.introduction = editor.html();
         var serviceObject;//服务层对象
-        if ($scope.entity.id != null) {//如果有ID
+        if ($scope.entity.goods.id != null) {//如果有ID
             serviceObject = goodsService.update($scope.entity); //修改
         } else {
             serviceObject = goodsService.add($scope.entity);//增加
@@ -70,8 +75,9 @@ app.controller('goodsController', function ($scope, $controller, $location, type
         serviceObject.success(
             function (response) {
                 if (response.success) {
-                    //重新查询
-                    $scope.reloadList();//重新加载
+                    alert("保存成功");
+                    //跳转到列表页面
+                    location.href = "goods.html";
                 } else {
                     alert(response.message);
                 }

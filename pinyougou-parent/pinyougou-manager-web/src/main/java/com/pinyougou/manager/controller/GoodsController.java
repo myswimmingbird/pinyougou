@@ -22,26 +22,26 @@ public class GoodsController {
 
 	@Reference
 	private GoodsService goodsService;
-	
+
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
 	@RequestMapping("/findAll")
-	public List<TbGoods> findAll(){			
+	public List<TbGoods> findAll(){
 		return goodsService.findAll();
 	}
-	
-	
+
+
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
 	@RequestMapping("/findPage")
-	public PageResult  findPage(int page,int rows){			
+	public PageResult  findPage(int page,int rows){
 		return goodsService.findPage(page, rows);
 	}
-	
+
 
 	/**
 	 * 修改
@@ -49,7 +49,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
+	public Result update(@RequestBody Goods goods){
 		try {
 			goodsService.update(goods);
 			return new Result(true, "修改成功");
@@ -57,8 +57,23 @@ public class GoodsController {
 			e.printStackTrace();
 			return new Result(false, "修改失败");
 		}
-	}	
-	
+	}
+
+    /**
+     * 批量修改状态
+     * @param ids
+     * @param status
+     */
+	@RequestMapping("/updateStatus")
+    public Result updateStatus(Long[] ids, String status) {
+        try {
+            goodsService.updateStatus(ids, status);
+            return new Result(true, "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"修改失败");
+        }
+    }
 	/**
 	 * 获取实体
 	 * @param id
@@ -66,9 +81,9 @@ public class GoodsController {
 	 */
 	@RequestMapping("/findOne")
 	public Goods findOne(Long id){
-		return goodsService.findOne(id);		
+		return goodsService.findOne(id);
 	}
-	
+
 	/**
 	 * 批量删除
 	 * @param ids
@@ -78,23 +93,23 @@ public class GoodsController {
 	public Result delete(Long [] ids){
 		try {
 			goodsService.delete(ids);
-			return new Result(true, "删除成功"); 
+			return new Result(true, "删除成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(false, "删除失败");
 		}
 	}
-	
+
 		/**
 	 * 查询+分页
-	 * @param brand
+	 * @param goods
 	 * @param page
 	 * @param rows
 	 * @return
 	 */
 	@RequestMapping("/search")
 	public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
-		return goodsService.findPage(goods, page, rows);		
+		return goodsService.findPage(goods, page, rows);
 	}
-	
+
 }
