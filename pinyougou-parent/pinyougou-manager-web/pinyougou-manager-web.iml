@@ -69,5 +69,6 @@
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.2" level="project" />
     <orderEntry type="module" module-name="pinyougou-sellergoods-interface" />
     <orderEntry type="module" module-name="pinyougou-pojo" />
+    <orderEntry type="module" module-name="pinyougou-content-interface" />
   </component>
 </module>

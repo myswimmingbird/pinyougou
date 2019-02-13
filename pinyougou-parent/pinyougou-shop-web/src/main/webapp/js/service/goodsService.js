@@ -23,7 +23,7 @@ app.service('goodsService',function($http){
 	}
 	//删除
 	this.dele=function(ids){
-		return $http.get('../goods/delete.do?ids='+ids);
+		return $http.get('../goods/delete.	do?ids='+ids);
 	}
 	//搜索
 	this.search=function(page,rows,searchEntity){
