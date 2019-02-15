@@ -87,13 +87,29 @@ public class ItemSearchServiceImpl implements ItemSearchService {
             FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
             query.addFilterQuery(filterQuery);
         }
-        //根据规格过滤
+        //根据规格筛选
         if (searchMap.get("spec") != null) {
             Map<String, String> specMap = (Map<String, String>) searchMap.get("spec");
             for (String key : specMap.keySet()) {
                 Criteria filterCriteria = new Criteria("item_spec_" + key).is(specMap.get("key"));
                 FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
                 query.addFilterQuery(filterQuery);
+            }
+        }
+        //根据价格筛选
+        if (!"".equals(searchMap.get("price"))) {
+            String[] prices = ((String) searchMap.get("price")).split("-");
+            if (!prices[0].equals("0")) {//若起点不为0
+                Criteria filterCriteria = new Criteria("item_price").greaterThanEqual(prices[0]);
+                FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+                query.addFilterQuery(filterQuery);
+
+            }
+            if (!prices[1].equals("*")) {//若终点不为*
+                Criteria filterCriteria = new Criteria("item_price").lessThanEqual(prices[1]);
+                FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+                query.addFilterQuery(filterQuery);
+
             }
         }
 
