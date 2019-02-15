@@ -40,10 +40,17 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         List<String> categoryList = searchCategoryList(searchMap);
         map.put("categoryList", categoryList);
         //根据分类查询品牌和规格列表
-        if (categoryList.size() > 0) {
-            map.putAll(searchBrandAndSpecList(categoryList.get(0)));
-        }
+        String categoryName = (String) searchMap.get("category");
+        System.out.println("分类没撒子"+categoryName);
 
+        if (!"".equals(categoryName)) {//如果有分类名称
+            map.putAll(searchBrandAndSpecList(categoryName));
+        } else {
+            if (categoryList.size() > 0) {
+                //如果没有则按第一个查询
+                map.putAll(searchBrandAndSpecList(categoryList.get(0)));
+            }
+        }
         return map;
     }
 
@@ -69,7 +76,29 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         //根据关键字查询
         Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
         query.addCriteria(criteria);
+        //根据分类筛选
+        if (!"".equals(searchMap.get("category"))) {//若字段不为空字符串
+            Criteria filterCriteria = new Criteria("item_category").is(searchMap.get("category"));
+            FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+            query.addFilterQuery(filterQuery);
+        }
+        //根据品牌筛选
+        if (!"".equals(searchMap.get("brand"))) {
+            Criteria filterCriteria = new Criteria("item_brand").is(searchMap.get("brand"));
+            FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+            query.addFilterQuery(filterQuery);
+        }
+        //根据规格过滤
+        if (searchMap.get("spec") != null) {
+            Map<String, String> specMap = (Map<String, String>) searchMap.get("spec");
+            for (String key : specMap.keySet()) {
+                Criteria filterCriteria = new Criteria("item_spec_" + key).is(specMap.get("key"));
+                FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+        }
 
+        //高亮查询
         HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query, TbItem.class);
 
         //循环高亮入口集合
@@ -140,4 +169,5 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         return map;
     }
+
 }
