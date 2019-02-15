@@ -95,7 +95,7 @@ public class GoodsServiceImpl implements GoodsService {
                 String title = goods.getGoods().getGoodsName();
                 Map<String, Object> specMap = JSON.parseObject(item.getSpec());
                 for (String key : specMap.keySet()) {
-                    title += specMap.get(key) + "";
+                    title += specMap.get(key) + " ";
                 }
                 item.setTitle(title);
                 //商品SPU编号
