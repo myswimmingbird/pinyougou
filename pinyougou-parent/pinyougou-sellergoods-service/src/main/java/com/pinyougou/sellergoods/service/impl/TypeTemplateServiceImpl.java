@@ -162,6 +162,7 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
             List<Map> specOptionList = findSpecOptionList(typeTemplate.getId());//根据模板id查询规格列表
             redisTemplate.boundHashOps("specList").put(typeTemplate.getId(),specOptionList);
         }
+        System.out.println("更新缓存：品牌列表及规格列表");
 
     }
 }
