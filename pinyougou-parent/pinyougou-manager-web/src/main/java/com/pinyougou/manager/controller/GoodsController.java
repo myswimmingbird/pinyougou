@@ -3,6 +3,7 @@ package com.pinyougou.manager.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.search.service.ItemSearchService;
@@ -31,6 +32,8 @@ public class GoodsController {
     @Reference
     private ItemSearchService itemSearchService;
 
+    @Reference(timeout = 40000)
+    private ItemPageService itemPageService;
     /**
      * 返回全部列表
      *
@@ -139,4 +142,9 @@ public class GoodsController {
         return goodsService.findPage(goods, page, rows);
     }
 
+    @RequestMapping("/genHtml")
+    public String genHtml(Long goodsId) {
+        itemPageService.genItemHtml(goodsId);
+        return "生成页面";
+    }
 }
