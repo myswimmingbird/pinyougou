@@ -1,5 +1,6 @@
 package com.pinyougou.sellergoods.service.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import com.pinyougou.sellergoods.service.GoodsService;
 
 import entity.PageResult;
 
-import static com.alibaba.fastjson.JSON.parseObject;
 
 /**
  * 服务实现层
@@ -85,6 +85,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     /**
      * 插入SKU列表数据
+     *
      * @param goods
      */
     private void saveItemList(Goods goods) {
@@ -219,6 +220,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     /**
      * 批量修改状态
+     *
      * @param ids
      * @param status
      */
@@ -229,6 +231,15 @@ public class GoodsServiceImpl implements GoodsService {
             tbGoods.setAuditStatus(status);
             goodsMapper.updateByPrimaryKey(tbGoods);
         }
+    }
+
+    @Override
+    public List<TbItem> findItemlistByGoodsIdandStatus(Long[] goodsIds, String status) {
+        TbItemExample example = new TbItemExample();
+        TbItemExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodsIdIn(Arrays.asList(goodsIds));
+        criteria.andStatusEqualTo(status);
+        return itemMapper.selectByExample(example);
     }
 
 }
