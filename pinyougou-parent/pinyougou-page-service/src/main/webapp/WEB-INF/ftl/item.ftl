@@ -17,9 +17,9 @@
     <script type="text/javascript" src="js/base.js"></script>
     <script type="text/javascript" src="js/controller/itemController.js"></script>
 
-</head>
+</head >
 
-<body ng-app="pinyougou" ng-controller="itemController" ng-init="num=1">
+<body ng-app="pinyougou" ng-controller="itemController" ng-init="num=1;loadSku()">
 <#--图片列表 -->
 <#assign imageList=goodsDesc.itemImages?eval />
 <#--扩展属性列表 -->
@@ -187,7 +187,7 @@
             </div>
             <div class="fr itemInfo-wrap">
                 <div class="sku-name">
-                    <h4>${goods.goodsName}</h4>
+                    <h4>{{sku.title}}</h4>
                 </div>
                 <div class="news"><span>${goods.caption}</span></div>
                 <div class="summary">
@@ -197,7 +197,7 @@
                         </div>
                         <div class="fl price">
                             <i>¥</i>
-                            <em>${goods.price}</em>
+                            <em>{{sku.price}}</em>
                             <span>降价通知</span>
                         </div>
                         <div class="fr remark">
@@ -243,7 +243,7 @@
                                     </div>
                                 </dt>
                                 <#list specification.attributeValue as item>
-                                    <dd><a href="javascript:;"
+                                    <dd><a href="javascript:;"看，
                                            class="{{isSelected('${specification.attributeName}','${item}')?'selected':''}}"
                                            ng-click="selectSpecification('${specification.attributeName}','${item}')">${item}
                                             <span title="点击取消选择">&nbsp;</span></a></dd>
@@ -265,7 +265,7 @@
                         <div class="fl">
                             <ul class="btn-choose unstyled">
                                 <li>
-                                    <a href="cart.html" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+                                    <a href="cart.html" target="_blank" ng-click="addToCart()" class="sui-btn  btn-danger addshopcar">加入购物车</a>
                                 </li>
                             </ul>
                         </div>
@@ -930,6 +930,22 @@
         });
 
     })
+</script>
+
+<script>
+    //SKU商品列表
+    var skuList = [
+        <#list itemList as item >
+        {
+            "id": ${item.id?c},
+            "title": "${item.title!''}",
+            "price": ${item.price?c},
+            "spec": ${item.spec}
+        },
+        </#list>
+    ];
+
+
 </script>
 <script type="text/javascript" src="js/model/cartModel.js"></script>
 <script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>

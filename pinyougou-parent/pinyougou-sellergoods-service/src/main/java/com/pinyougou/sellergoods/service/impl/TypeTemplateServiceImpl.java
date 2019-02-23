@@ -25,7 +25,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  *
  * @author Administrator
  */
-@Service
+@Service(timeout = 10000)
 public class TypeTemplateServiceImpl implements TypeTemplateService {
 
     @Autowired
