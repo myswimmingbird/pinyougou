@@ -16,7 +16,14 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset" name="ApplicationContext Jms Consumer" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/spring/applicationContext-jms-consumer.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/applicationContext-tx.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/applicationContext-solr.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/applicationContext-service.xml</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
@@ -114,5 +121,9 @@
     </orderEntry>
     <orderEntry type="module" module-name="pinyougou-search-interface" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-client:5.15.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.fusesource.hawtbuf:hawtbuf:1.11" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:1.0.1" level="project" />
   </component>
 </module>

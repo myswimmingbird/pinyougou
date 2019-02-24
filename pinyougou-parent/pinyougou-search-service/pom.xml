@@ -110,6 +110,13 @@
             <version>5.0.1.RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--activemq-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.15.4</version>
+        </dependency>
     </dependencies>
 
     <build>
